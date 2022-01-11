@@ -1,0 +1,23 @@
+services: 
+  database:
+    image: postgres:12.2-alpine
+    restart: "no"
+    container_name: final-db
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
+
+  database-admin:
+    image: dpage/pgadmin4
+    container_name: hack-db-admin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${ADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${ADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5050:80"

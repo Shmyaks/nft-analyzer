@@ -1,0 +1,126 @@
+basePath: /api/v1
+definitions:
+  models.UserAuthModel:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.UserBaseModel:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+    type: object
+  models.UserListBaseModel:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/models.UserBaseModel'
+        type: array
+    type: object
+  models.UserTokenModel:
+    properties:
+      token:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /auth:
+    post:
+      consumes:
+      - application/json
+      description: auth User
+      parameters:
+      - description: Auntification
+        in: body
+        name: Auth
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserAuthModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserTokenModel'
+      summary: Auth user
+      tags:
+      - Auth
+  /create:
+    post:
+      consumes:
+      - application/json
+      description: create user
+      parameters:
+      - description: Creating
+        in: body
+        name: Create
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserAuthModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserTokenModel'
+      summary: Create user
+      tags:
+      - Auth
+  /user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get user by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserBaseModel'
+      summary: Get user
+      tags:
+      - User
+  /user/list:
+    get:
+      consumes:
+      - application/json
+      description: Get user list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserListBaseModel'
+      summary: Get user list
+      tags:
+      - User
+swagger: "2.0"
